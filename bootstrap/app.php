@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'success' => false,
             'message' => 'Unauthenticated, token tidak valid atau tidak ada'
         ], 401));
+        // Daftarkan middleware role
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
