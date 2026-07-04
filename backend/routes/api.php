@@ -5,6 +5,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfilAlumniController;
 use App\Http\Controllers\LaporanSaranController;
+use App\Http\Controllers\TentangController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -13,6 +14,7 @@ Route::get('/informasi', [ArtikelController::class, 'index']);
 Route::get('/informasi/{id}', [ArtikelController::class, 'show']);
 Route::get('/profil-alumni', [ProfilAlumniController::class, 'index']);
 Route::post('/laporan-saran', [LaporanSaranController::class, 'store']);
+Route::get('/tentang/{jenis}', [TentangController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -33,5 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/laporan-saran', [LaporanSaranController::class, 'index']);
         Route::delete('/laporan-saran/{id}', [LaporanSaranController::class, 'destroy']);
+
+        Route::post('/tentang', [TentangController::class, 'store']);
+        Route::put('/tentang/{id}', [TentangController::class, 'update']);
+        Route::delete('/tentang/{id}', [TentangController::class, 'destroy']);
     });
 });
