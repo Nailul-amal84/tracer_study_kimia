@@ -1,8 +1,20 @@
+import { useState, useEffect } from 'react';
+import { getFaq } from '../services/api';
+
 function FAQ() {
-  const daftarFaq = [
-    { id: 1, pertanyaan: "Apa itu tracer study?", jawaban: "Tracer study adalah survei untuk melacak alumni." },
-    { id: 2, pertanyaan: "Siapa yang wajib mengisi?", jawaban: "Semua alumni dan mahasiswa aktif." },
-  ];
+  const [daftarFaq, setDaftarFaq] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getFaq().then((result) => {
+      setDaftarFaq(result.data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <p>Memuat data...</p>;
+  }
 
   return (
     <div>
