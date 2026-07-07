@@ -1,7 +1,6 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Data dummy — sementara backend belum online
-// Bentuknya dibuat SAMA PERSIS seperti response asli di kontrak API
+// ===== FAQ =====
 const dummyFaq = {
   success: true,
   data: [
@@ -18,6 +17,26 @@ export async function getFaq() {
 
   // --- Versi DUMMY (dipakai sementara) ---
   return new Promise((resolve) => {
-    setTimeout(() => resolve(dummyFaq), 500); // pura-pura delay 0.5 detik kayak network asli
+    setTimeout(() => resolve(dummyFaq), 500);
+  });
+}
+
+// ===== Laporan & Saran =====
+export async function kirimLaporanSaran(data) {
+  // --- Versi ASLI (aktifkan nanti kalau backend sudah online) ---
+  // const response = await fetch(`${BASE_URL}/laporan-saran`, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(data),
+  // });
+  // const result = await response.json();
+  // return result;
+
+  // --- Versi DUMMY (dipakai sementara) ---
+  console.log('Data yang dikirim (dummy):', data);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true, message: 'Terima kasih, masukan Anda sudah kami terima' });
+    }, 500);
   });
 }

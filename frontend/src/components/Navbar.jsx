@@ -6,6 +6,8 @@ function Navbar() {
       <Link to="/">Beranda</Link>
       {' | '}
       <Link to="/faq">FAQ</Link>
+      {' | '}
+      <Link to="/laporan-saran">Laporan & Saran</Link>
     </nav>
   );
 }
