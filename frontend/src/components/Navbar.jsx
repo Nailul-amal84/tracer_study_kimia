@@ -14,6 +14,8 @@ function Navbar() {
       <Link to="/tentang/surveyor">Surveyor</Link>
       {' | '}
       <Link to="/tentang/peneliti">Peneliti</Link>
+      {' | '}
+      <Link to="/profil-alumni">Profil Alumni</Link>
     </nav>
   );
 }

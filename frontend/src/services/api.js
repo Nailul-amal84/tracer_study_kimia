@@ -67,3 +67,23 @@ export async function getTentang(jenis) {
     }, 500);
   });
 }
+// ===== Profil Alumni =====
+const dummyProfilAlumni = [
+  { id: 1, nama: "Budi Santoso", tahun_lulus: 2023, deskripsi_profesi: "Software Engineer di PT Maju Jaya", foto_url: "" },
+  { id: 2, nama: "Siti Nurhaliza", tahun_lulus: 2022, deskripsi_profesi: "Guru Kimia di SMA Negeri 1", foto_url: "" },
+  { id: 3, nama: "Andi Wijaya", tahun_lulus: 2023, deskripsi_profesi: "Peneliti di Balai Riset", foto_url: "" },
+];
+
+export async function getProfilAlumni() {
+  // --- Versi ASLI ---
+  // const response = await fetch(`${BASE_URL}/profil-alumni`);
+  // const result = await response.json();
+  // return result;
+
+  // --- Versi DUMMY ---
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true, data: dummyProfilAlumni });
+    }, 500);
+  });
+}

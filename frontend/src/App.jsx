@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import FAQ from './pages/FAQ';
 import LaporanSaran from './pages/LaporanSaran';
 import Tentang from './pages/Tentang';
+import ProfilAlumni from './pages/ProfilAlumni';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/laporan-saran" element={<LaporanSaran />} />
         <Route path="/tentang/:jenis" element={<Tentang />} />
+        <Route path="/profil-alumni" element={<ProfilAlumni />} />
       </Routes>
     </BrowserRouter>
   );
