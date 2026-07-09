@@ -40,3 +40,30 @@ export async function kirimLaporanSaran(data) {
     }, 500);
   });
 }
+// ===== Tentang =====
+const dummyTentang = {
+  "struktur-organisasi": [
+    { id: 1, nama: "Dr. Ahmad", jabatan: "Ketua Tracer", foto_url: "" },
+    { id: 2, nama: "Siti Aminah, M.Si", jabatan: "Sekretaris", foto_url: "" },
+  ],
+  "surveyor": [
+    { id: 1, nama: "Budi Santoso", jabatan: "Surveyor Lapangan", foto_url: "" },
+  ],
+  "peneliti": [
+    { id: 1, nama: "Dr. Rina Wulandari", jabatan: "Peneliti Utama", foto_url: "" },
+  ],
+};
+
+export async function getTentang(jenis) {
+  // --- Versi ASLI (aktifkan nanti kalau backend sudah online) ---
+  // const response = await fetch(`${BASE_URL}/tentang/${jenis}`);
+  // const result = await response.json();
+  // return result;
+
+  // --- Versi DUMMY ---
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true, data: dummyTentang[jenis] || [] });
+    }, 500);
+  });
+}

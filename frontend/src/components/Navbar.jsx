@@ -8,6 +8,12 @@ function Navbar() {
       <Link to="/faq">FAQ</Link>
       {' | '}
       <Link to="/laporan-saran">Laporan & Saran</Link>
+      {' | '}
+      <Link to="/tentang/struktur-organisasi">Struktur Organisasi</Link>
+      {' | '}
+      <Link to="/tentang/surveyor">Surveyor</Link>
+      {' | '}
+      <Link to="/tentang/peneliti">Peneliti</Link>
     </nav>
   );
 }
