@@ -5,6 +5,8 @@ import FAQ from './pages/FAQ';
 import LaporanSaran from './pages/LaporanSaran';
 import Tentang from './pages/Tentang';
 import ProfilAlumni from './pages/ProfilAlumni';
+import Informasi from './pages/informasi';
+import DetailArtikel from './pages/detailartikel';
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import KelolaFaq from './pages/admin/KelolaFaq';
@@ -13,6 +15,7 @@ import KelolaProfilAlumni from './pages/admin/KelolaProfilAlumni';
 import KelolaTentang from './pages/admin/KelolaTentang';
 import KelolaTracerStudy from './pages/admin/KelolaTracerStudy';
 import LihatPesan from './pages/admin/LihatPesan';
+import TracerStudy from './pages/TracerStudy';
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/laporan-saran" element={<><Navbar /><LaporanSaran /></>} />
         <Route path="/tentang/:jenis" element={<><Navbar /><Tentang /></>} />
         <Route path="/profil-alumni" element={<><Navbar /><ProfilAlumni /></>} />
+        <Route path="/informasi" element={<><Navbar /><Informasi /></>} />
+        <Route path="/informasi/:id" element={<><Navbar /><DetailArtikel /></>} />
+        <Route path="/tracer-study" element={<><Navbar /><TracerStudy /></>} />
 
         {/* Halaman Admin (tanpa Navbar publik) */}
         <Route path="/admin/login" element={<Login />} />

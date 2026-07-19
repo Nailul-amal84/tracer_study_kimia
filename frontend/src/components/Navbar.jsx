@@ -8,6 +8,10 @@ function Navbar() {
     <nav>
       <Link to="/">Beranda</Link>
       {' | '}
+       <Link to="/informasi">Informasi</Link>
+      {' | '}
+      <Link to="/tracer-study">Tracer Study</Link>
+      {' | '}
 
       {/* Dropdown Tentang */}
       <span
