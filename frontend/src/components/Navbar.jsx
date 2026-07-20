@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logouinar from '../assets/logo_uinar.png';
+import logo from '../assets/logo_uinar.png';
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path || location.pathname.startsWith(path + '/');
@@ -17,6 +18,18 @@ function Navbar() {
     background: isActive(path) ? 'rgba(255,255,255,0.15)' : 'transparent',
     textDecoration: 'none',
     transition: 'all 0.2s ease',
+    display: 'block',
+  });
+
+  const mobileLinkStyle = (path) => ({
+    display: 'block',
+    padding: '12px 16px',
+    fontWeight: 500,
+    fontSize: '15px',
+    color: isActive(path) ? '#1a3a5c' : '#4a5568',
+    background: isActive(path) ? '#ebf8ff' : 'transparent',
+    textDecoration: 'none',
+    borderRadius: '6px',
   });
 
   return (
@@ -38,20 +51,13 @@ function Navbar() {
       }}>
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <img
-            src={logouinar}
-            alt="Logo UIN Ar-Raniry"
-            style={{
-              width: '75px',
-              height: '75px',
-              objectFit: 'contain'
-            }}
-          />
+          <img src={logo} alt="Logo" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '6px' }} />
           <span style={{ color: 'white', fontWeight: 700, fontSize: '16px' }}>Tracer Study Kimia</span>
         </Link>
 
-        {/* Menu */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        {/* Menu Desktop */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+          className="desktop-menu">
           <Link to="/" style={linkStyle('/')}>Beranda</Link>
 
           {/* Dropdown Tentang */}
@@ -112,7 +118,80 @@ function Navbar() {
           <Link to="/laporan-saran" style={linkStyle('/laporan-saran')}>Laporan & Saran</Link>
           <Link to="/faq" style={linkStyle('/faq')}>FAQ</Link>
         </div>
+
+        {/* Hamburger Button (mobile) */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{
+            display: 'none',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+            color: 'white',
+            fontSize: '24px',
+          }}
+          className="hamburger-btn"
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div style={{
+          background: 'white',
+          padding: '12px 16px',
+          borderTop: '1px solid #e2e8f0',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+          animation: 'slideDown 0.25s ease'
+        }}
+          className="mobile-menu"
+        >
+          <Link to="/" style={mobileLinkStyle('/')} onClick={() => setMenuOpen(false)}>Beranda</Link>
+
+          {/* Tentang di Mobile */}
+          <div style={{ padding: '12px 16px', fontWeight: 600, color: '#718096', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            Tentang
+          </div>
+          {[
+            { to: '/tentang/struktur_organisasi', label: 'Struktur Organisasi' },
+            { to: '/tentang/surveyor', label: 'Surveyor' },
+            { to: '/tentang/peneliti', label: 'Peneliti' },
+          ].map((item) => (
+            <Link key={item.to} to={item.to} style={{ ...mobileLinkStyle(item.to), paddingLeft: '28px', fontSize: '14px' }} onClick={() => setMenuOpen(false)}>
+              {item.label}
+            </Link>
+          ))}
+
+          <Link to="/tracer-study" style={mobileLinkStyle('/tracer-study')} onClick={() => setMenuOpen(false)}>Tracer Study</Link>
+          <Link to="/profil-alumni" style={mobileLinkStyle('/profil-alumni')} onClick={() => setMenuOpen(false)}>Profil Alumni</Link>
+          <Link to="/informasi" style={mobileLinkStyle('/informasi')} onClick={() => setMenuOpen(false)}>Informasi</Link>
+          <Link to="/laporan-saran" style={mobileLinkStyle('/laporan-saran')} onClick={() => setMenuOpen(false)}>Laporan & Saran</Link>
+          <Link to="/faq" style={mobileLinkStyle('/faq')} onClick={() => setMenuOpen(false)}>FAQ</Link>
+        </div>
+      )}
+
+      {/* CSS untuk responsive */}
+      <style>{`
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @media (max-width: 768px) {
+          .desktop-menu { display: none !important; }
+          .hamburger-btn { display: block !important; }
+        }
+        @media (min-width: 769px) {
+          .mobile-menu { display: none !important; }
+        }
+      `}</style>
     </nav>
   );
 }
