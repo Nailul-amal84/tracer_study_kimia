@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AdminLayout from '../../components/AdminLayout';
 
 function KelolaFaq() {
   const navigate = useNavigate();
@@ -105,97 +106,50 @@ function KelolaFaq() {
   };
 
   return (
-    <div style={{ padding: '32px', maxWidth: '800px', margin: '0 auto' }}>
-      {/* Header */}
+    <AdminLayout>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, fontSize: '24px' }}>Kelola FAQ</h1>
-        <button
-          onClick={() => navigate('/admin/dashboard')}
-          style={{ padding: '8px 16px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-        >
-          ← Kembali
-        </button>
+        <h1 style={{ fontSize: '1.6rem' }}>Kelola FAQ</h1>
       </div>
 
-      {/* Notifikasi */}
-      {error && <div style={{ background: '#fee2e2', color: '#dc2626', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{error}</div>}
-      {success && <div style={{ background: '#dcfce7', color: '#16a34a', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{success}</div>}
+      {error && <div className="alert-error">{error}</div>}
+      {success && <div className="alert-success">{success}</div>}
 
-      {/* Form Tambah/Edit */}
-      <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '24px', marginBottom: '32px' }}>
-        <h2 style={{ margin: '0 0 16px', fontSize: '18px' }}>{editId ? 'Edit FAQ' : 'Tambah FAQ Baru'}</h2>
+      {/* Form */}
+      <div className="card" style={{ marginBottom: '28px' }}>
+        <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>{editId ? 'Edit FAQ' : 'Tambah FAQ Baru'}</h2>
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '12px' }}>
+          <div className="form-group">
             <label>Pertanyaan</label>
-            <input
-              type="text"
-              name="pertanyaan"
-              value={form.pertanyaan}
-              onChange={handleChange}
-              required
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
+            <input type="text" name="pertanyaan" value={form.pertanyaan} onChange={handleChange} required placeholder="Tulis pertanyaan..." />
           </div>
-          <div style={{ marginBottom: '16px' }}>
+          <div className="form-group">
             <label>Jawaban</label>
-            <textarea
-              name="jawaban"
-              value={form.jawaban}
-              onChange={handleChange}
-              required
-              rows={4}
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
+            <textarea name="jawaban" value={form.jawaban} onChange={handleChange} required rows={4} placeholder="Tulis jawaban..." />
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button
-              type="submit"
-              style={{ padding: '8px 24px', background: '#16213e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-            >
-              {editId ? 'Simpan Perubahan' : 'Tambah FAQ'}
-            </button>
-            {editId && (
-              <button
-                type="button"
-                onClick={handleCancel}
-                style={{ padding: '8px 24px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-              >
-                Batal
-              </button>
-            )}
+            <button type="submit" className="btn-primary">{editId ? 'Simpan Perubahan' : 'Tambah FAQ'}</button>
+            {editId && <button type="button" onClick={handleCancel} className="btn-gray">Batal</button>}
           </div>
         </form>
       </div>
 
-      {/* List FAQ */}
-      <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Daftar FAQ</h2>
-      {loading ? (
-        <p>Memuat data...</p>
-      ) : faqs.length === 0 ? (
-        <p>Belum ada FAQ.</p>
+      {/* List */}
+      <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>Daftar FAQ ({faqs.length})</h2>
+      {loading ? <p>Memuat data...</p> : faqs.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px', color: '#718096' }}>Belum ada FAQ.</div>
       ) : (
         faqs.map((faq) => (
-          <div key={faq.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
-            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{faq.pertanyaan}</div>
-            <div style={{ color: '#6b7280', marginBottom: '12px' }}>{faq.jawaban}</div>
+          <div key={faq.id} className="card" style={{ marginBottom: '12px' }}>
+            <div style={{ fontWeight: 600, color: '#1a3a5c', marginBottom: '6px' }}>{faq.pertanyaan}</div>
+            <div style={{ color: '#718096', fontSize: '14px', marginBottom: '14px' }}>{faq.jawaban}</div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button
-                onClick={() => handleEdit(faq)}
-                style={{ padding: '4px 12px', background: '#f59e0b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(faq.id)}
-                style={{ padding: '4px 12px', background: '#dc2626', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-              >
-                Hapus
-              </button>
+              <button onClick={() => handleEdit(faq)} className="btn-warning">Edit</button>
+              <button onClick={() => handleDelete(faq.id)} className="btn-danger">Hapus</button>
             </div>
           </div>
         ))
       )}
-    </div>
+    </AdminLayout>
   );
 }
 

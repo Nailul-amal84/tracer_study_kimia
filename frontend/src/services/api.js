@@ -42,7 +42,7 @@ export async function kirimLaporanSaran(data) {
 }
 // ===== Tentang =====
 const dummyTentang = {
-  "struktur-organisasi": [
+  "struktur_organisasi": [
     { id: 1, nama: "Dr. Ahmad", jabatan: "Ketua Tracer", foto_url: "" },
     { id: 2, nama: "Siti Aminah, M.Si", jabatan: "Sekretaris", foto_url: "" },
   ],

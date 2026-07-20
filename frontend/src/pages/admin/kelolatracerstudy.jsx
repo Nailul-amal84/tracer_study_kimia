@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AdminLayout from '../../components/AdminLayout';
 
 function KelolaTracerStudy() {
   const navigate = useNavigate();
@@ -33,97 +34,97 @@ function KelolaTracerStudy() {
   const handleEdit = (tracer) => {
     setEditJenis(tracer.jenis);
     setFormUrl(tracer.google_form_url || '');
-    setError('');
-    setSuccess('');
+    setError(''); setSuccess('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-
+    setError(''); setSuccess('');
     try {
       const res = await fetch(`${BASE_URL}/tracer-study/${editJenis}/link`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ google_form_url: formUrl })
       });
-
       const result = await res.json();
-
       if (result.success) {
         setSuccess(result.message);
-        setEditJenis(null);
-        setFormUrl('');
+        setEditJenis(null); setFormUrl('');
         fetchTracers();
-      } else {
-        setError(result.message || 'Terjadi kesalahan');
-      }
-    } catch (err) {
-      setError('Gagal terhubung ke server');
-    }
+      } else setError(result.message || 'Terjadi kesalahan');
+    } catch (err) { setError('Gagal terhubung ke server'); }
+  };
+
+  const ikonPerJenis = {
+    pengguna_lulusan: '🏢',
+    mahasiswa: '🎓',
+    alumni: '👨‍🎓',
   };
 
   return (
-    <div style={{ padding: '32px', maxWidth: '800px', margin: '0 auto' }}>
+    <AdminLayout>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, fontSize: '24px' }}>Kelola Tracer Study</h1>
-        <button onClick={() => navigate('/admin/dashboard')}
-          style={{ padding: '8px 16px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-          ← Kembali
-        </button>
+        <h1 style={{ fontSize: '1.6rem' }}>Kelola Tracer Study</h1>
       </div>
 
-      {error && <div style={{ background: '#fee2e2', color: '#dc2626', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{error}</div>}
-      {success && <div style={{ background: '#dcfce7', color: '#16a34a', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{success}</div>}
+      {error && <div className="alert-error">{error}</div>}
+      {success && <div className="alert-success">{success}</div>}
 
+      {/* Form Update Link */}
       {editJenis && (
-        <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '24px', marginBottom: '32px' }}>
-          <h2 style={{ margin: '0 0 16px', fontSize: '18px' }}>Update Link Google Form</h2>
+        <div className="card" style={{ marginBottom: '28px', borderLeft: '4px solid #1a3a5c' }}>
+          <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>
+            Update Link Google Form — {tracers.find(t => t.jenis === editJenis)?.label}
+          </h2>
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '16px' }}>
+            <div className="form-group">
               <label>Link Google Form</label>
-              <input type="url" value={formUrl} onChange={(e) => setFormUrl(e.target.value)} required
+              <input
+                type="url"
+                value={formUrl}
+                onChange={(e) => setFormUrl(e.target.value)}
+                required
                 placeholder="https://forms.gle/..."
-                style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }} />
+              />
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button type="submit"
-                style={{ padding: '8px 24px', background: '#16213e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Simpan Link
-              </button>
-              <button type="button" onClick={() => { setEditJenis(null); setFormUrl(''); }}
-                style={{ padding: '8px 24px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Batal
-              </button>
+              <button type="submit" className="btn-primary">Simpan Link</button>
+              <button type="button" onClick={() => { setEditJenis(null); setFormUrl(''); }} className="btn-gray">Batal</button>
             </div>
           </form>
         </div>
       )}
 
-      <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Daftar Jenis Tracer Study</h2>
+      {/* List */}
+      <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>Daftar Jenis Tracer Study</h2>
       {loading ? <p>Memuat data...</p> : (
         tracers.map((tracer) => (
-          <div key={tracer.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
-            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{tracer.label}</div>
-            <div style={{ color: '#6b7280', marginBottom: '4px' }}>
-              Link Form: {tracer.google_form_url
-                ? <a href={tracer.google_form_url} target="_blank" rel="noreferrer">{tracer.google_form_url}</a>
-                : <span style={{ color: '#dc2626' }}>Belum ada link</span>}
-            </div>
-            <div style={{ marginTop: '12px' }}>
-              <button onClick={() => handleEdit(tracer)}
-                style={{ padding: '4px 12px', background: '#f59e0b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          <div key={tracer.id} className="card" style={{ marginBottom: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '20px' }}>{ikonPerJenis[tracer.jenis] || '📋'}</span>
+                  <span style={{ fontWeight: 600, color: '#1a3a5c', fontSize: '15px' }}>{tracer.label}</span>
+                </div>
+                <div style={{ fontSize: '13px', color: '#718096' }}>
+                  Link Form:{' '}
+                  {tracer.google_form_url ? (
+                    <a href={tracer.google_form_url} target="_blank" rel="noreferrer" style={{ color: '#2b6cb0', wordBreak: 'break-all' }}>
+                      {tracer.google_form_url}
+                    </a>
+                  ) : (
+                    <span style={{ color: '#e53e3e', fontWeight: 500 }}>⚠️ Belum ada link</span>
+                  )}
+                </div>
+              </div>
+              <button onClick={() => handleEdit(tracer)} className="btn-warning" style={{ flexShrink: 0 }}>
                 Update Link
               </button>
             </div>
           </div>
         ))
       )}
-    </div>
+    </AdminLayout>
   );
 }
 

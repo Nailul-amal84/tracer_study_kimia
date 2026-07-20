@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo_uinar.png';
 
 function Login() {
   const navigate = useNavigate();
@@ -40,48 +41,78 @@ function Login() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '80px auto', padding: '32px', border: '1px solid #ccc', borderRadius: '8px' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>Login Admin</h2>
-
-      {error && (
-        <div style={{ background: '#fee2e2', color: '#dc2626', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '16px' }}>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '24px' }}>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-            style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '12px',
+        padding: '40px',
+        width: '100%',
+        maxWidth: '400px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+      }}>
+        {/* Logo */}
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <img src={logo} 
+          alt="Logo" 
+          style={{ 
+            width: '56px', 
+            height: '56px', 
+            objectFit: 'contain', 
+            borderRadius: '12px', 
+            margin: '0 auto 16px', 
+            display: 'block' }} />
+          <h2 style={{ fontSize: '22px', color: '#1a3a5c', marginBottom: '4px' }}>Login Admin</h2>
+          <p style={{ fontSize: '13px', color: '#718096' }}>Tracer Study Kimia UINAR</p>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ width: '100%', padding: '10px', background: '#16213e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-        >
-          {loading ? 'Loading...' : 'Login'}
-        </button>
-      </form>
+        {error && <div className="alert-error">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder="admin@uinar.ac.id"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary"
+            style={{ width: '100%', padding: '12px', fontSize: '15px', marginTop: '8px' }}
+          >
+            {loading ? 'Memproses...' : 'Login'}
+          </button>
+        </form>
+
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <a href="/" style={{ fontSize: '13px', color: '#718096' }}>← Kembali ke Website</a>
+        </div>
+      </div>
     </div>
   );
 }

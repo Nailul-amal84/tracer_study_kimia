@@ -40,90 +40,147 @@ function TracerStudy() {
     }
   };
 
+   const ikonPerJenis = {
+    pengguna_lulusan: '🏢',
+    mahasiswa: '🎓',
+    alumni: '👨‍🎓',
+  };
+
   return (
-    <div style={{ padding: '32px', maxWidth: '900px', margin: '0 auto' }}>
-      <h1>Tracer Study</h1>
-      <p style={{ color: '#6b7280', marginBottom: '32px' }}>
-        Pilih jenis tracer study di bawah untuk mengisi kuisioner atau melihat hasil survey.
-      </p>
+    <div>
+      {/* Header */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',
+        padding: '48px 24px',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <h1 style={{ color: 'white', marginBottom: '8px' }}>Tracer Study</h1>
+        <p style={{ color: 'rgba(255,255,255,0.75)' }}>
+          Pilih jenis tracer study untuk mengisi kuisioner atau melihat hasil survey
+        </p>
+      </div>
 
-      {error && <div style={{ color: '#dc2626', marginBottom: '16px' }}>{error}</div>}
+      {/* Content */}
+      <div className="page-content">
+        {error && <div className="alert-error">{error}</div>}
 
-      {loading ? (
-        <p>Memuat data...</p>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px', marginBottom: '32px' }}>
-          {tracers.map((tracer) => (
-            <div
-              key={tracer.id}
-              style={{
-                border: `2px solid ${aktifJenis === tracer.jenis ? '#16213e' : '#ccc'}`,
-                borderRadius: '8px',
-                padding: '24px',
-                textAlign: 'center'
-              }}
-            >
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>📋</div>
-              <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>{tracer.label}</h2>
+        {loading ? (
+          <p>Memuat data...</p>
+        ) : (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '20px',
+            marginBottom: '40px'
+          }}>
+            {tracers.map((tracer) => (
+              <div
+                key={tracer.id}
+                className="card"
+                style={{
+                  textAlign: 'center',
+                  border: aktifJenis === tracer.jenis ? '2px solid #1a3a5c' : '1px solid #e2e8f0',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div style={{ fontSize: '40px', marginBottom: '12px' }}>
+                  {ikonPerJenis[tracer.jenis] || '📋'}
+                </div>
+                <h2 style={{ fontSize: '17px', marginBottom: '8px' }}>{tracer.label}</h2>
+                <p style={{ fontSize: '13px', color: '#718096', marginBottom: '20px' }}>
+                  {tracer.jenis === 'pengguna_lulusan' && 'Untuk perusahaan/instansi pengguna lulusan Kimia UINAR'}
+                  {tracer.jenis === 'mahasiswa' && 'Untuk mahasiswa aktif Program Studi Kimia UINAR'}
+                  {tracer.jenis === 'alumni' && 'Untuk alumni Program Studi Kimia UINAR'}
+                </p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {tracer.google_form_url ? (
-                  <a
-                    href={tracer.google_form_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ display: 'block', padding: '8px 16px', background: '#16213e', color: 'white', borderRadius: '4px', textDecoration: 'none' }}
-                  >
-                    Isi Kuisioner
-                  </a>
-                ) : (
-                  <div style={{ padding: '8px 16px', background: '#e5e7eb', color: '#6b7280', borderRadius: '4px', fontSize: '14px' }}>
-                    Link belum tersedia
-                  </div>
-                )}
-
-                <button
-                  onClick={() => fetchHasil(tracer.jenis)}
-                  style={{ padding: '8px 16px', background: '#f3f4f6', color: '#16213e', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}
-                >
-                  Lihat Hasil Survey
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Hasil Survey */}
-      {aktifJenis && (
-        <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '24px' }}>
-          <h2 style={{ fontSize: '20px', marginBottom: '16px' }}>
-            Hasil Survey — {tracers.find(t => t.jenis === aktifJenis)?.label}
-          </h2>
-
-          {loadingHasil ? (
-            <p>Memuat hasil survey...</p>
-          ) : hasil && hasil.data ? (
-            <div>
-              <p style={{ color: '#6b7280', marginBottom: '16px' }}>
-                Terakhir diperbarui: {new Date(hasil.terakhir_update).toLocaleDateString('id-ID')}
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' }}>
-                {Object.entries(hasil.data).map(([key, value]) => (
-                  <div key={key} style={{ background: '#f3f4f6', borderRadius: '8px', padding: '16px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#16213e' }}>{value}</div>
-                    <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-                      {key.replace(/_/g, ' ')}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {tracer.google_form_url ? (
+                    <a
+                      href={tracer.google_form_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-primary"
+                    >
+                      📝 Isi Kuisioner
+                    </a>
+                  ) : (
+                    <div style={{
+                      padding: '10px 16px',
+                      background: '#f7f9fc',
+                      color: '#a0aec0',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      border: '1px dashed #e2e8f0'
+                    }}>
+                      Link belum tersedia
                     </div>
-                  </div>
-                ))}
+                  )}
+
+                  <button
+                    onClick={() => fetchHasil(tracer.jenis)}
+                    className="btn-secondary"
+                  >
+                    📊 Lihat Hasil Survey
+                  </button>
+                </div>
               </div>
-            </div>
-          ) : (
-            <p style={{ color: '#6b7280' }}>Belum ada data hasil survey.</p>
-          )}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+
+        {/* Hasil Survey */}
+        {aktifJenis && (
+          <div style={{
+            background: 'white',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '28px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+          }}>
+            <h2 style={{ fontSize: '20px', marginBottom: '20px', color: '#1a3a5c' }}>
+              📊 Hasil Survey — {tracers.find(t => t.jenis === aktifJenis)?.label}
+            </h2>
+
+            {loadingHasil ? (
+              <p>Memuat hasil survey...</p>
+            ) : hasil && hasil.data ? (
+              <div>
+                <p style={{ fontSize: '13px', color: '#718096', marginBottom: '20px' }}>
+                  Terakhir diperbarui: {new Date(hasil.terakhir_update).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </p>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                  gap: '16px'
+                }}>
+                  {Object.entries(hasil.data).map(([key, value]) => (
+                    <div key={key} style={{
+                      background: '#f7f9fc',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px',
+                      padding: '20px',
+                      textAlign: 'center'
+                    }}>
+                      <div style={{ fontSize: '28px', fontWeight: 700, color: '#1a3a5c', marginBottom: '6px' }}>
+                        {value}
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#718096', textTransform: 'capitalize' }}>
+                        {key.replace(/_/g, ' ')}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '40px 0', color: '#718096' }}>
+                <div style={{ fontSize: '40px', marginBottom: '12px' }}>📭</div>
+                <p>Belum ada data hasil survey untuk jenis tracer ini.</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

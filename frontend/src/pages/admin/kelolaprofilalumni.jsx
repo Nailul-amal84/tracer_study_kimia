@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AdminLayout from '../../components/AdminLayout';
 
 function KelolaProfilAlumni() {
   const navigate = useNavigate();
@@ -31,155 +32,114 @@ function KelolaProfilAlumni() {
     fetchAlumni();
   }, []);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-
+    setError(''); setSuccess('');
     const formData = new FormData();
     formData.append('nama', form.nama);
     formData.append('tahun_lulus', form.tahun_lulus);
     formData.append('deskripsi_profesi', form.deskripsi_profesi);
     if (fotoFile) formData.append('foto', fotoFile);
     if (editId) formData.append('_method', 'PUT');
-
     const url = editId ? `${BASE_URL}/profil-alumni/${editId}` : `${BASE_URL}/profil-alumni`;
-
     try {
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
-
       const result = await res.json();
-
       if (result.success) {
         setSuccess(result.message);
         setForm({ nama: '', tahun_lulus: '', deskripsi_profesi: '' });
-        setFotoFile(null);
-        setEditId(null);
+        setFotoFile(null); setEditId(null);
         fetchAlumni();
-      } else {
-        setError(result.message || 'Terjadi kesalahan');
-      }
-    } catch (err) {
-      setError('Gagal terhubung ke server');
-    }
+      } else setError(result.message || 'Terjadi kesalahan');
+    } catch (err) { setError('Gagal terhubung ke server'); }
   };
 
   const handleEdit = (alumni) => {
     setEditId(alumni.id);
     setForm({ nama: alumni.nama, tahun_lulus: alumni.tahun_lulus, deskripsi_profesi: alumni.deskripsi_profesi });
-    setError('');
-    setSuccess('');
+    setError(''); setSuccess('');
   };
 
   const handleDelete = async (id) => {
     if (!confirm('Yakin mau hapus profil alumni ini?')) return;
-
     try {
       const res = await fetch(`${BASE_URL}/profil-alumni/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
-
       const result = await res.json();
-      if (result.success) {
-        setSuccess(result.message);
-        fetchAlumni();
-      }
-    } catch (err) {
-      setError('Gagal menghapus profil alumni');
-    }
+      if (result.success) { setSuccess(result.message); fetchAlumni(); }
+    } catch (err) { setError('Gagal menghapus profil alumni'); }
   };
 
   const handleCancel = () => {
     setEditId(null);
     setForm({ nama: '', tahun_lulus: '', deskripsi_profesi: '' });
-    setFotoFile(null);
-    setError('');
-    setSuccess('');
+    setFotoFile(null); setError(''); setSuccess('');
   };
 
   return (
-    <div style={{ padding: '32px', maxWidth: '800px', margin: '0 auto' }}>
+    <AdminLayout>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, fontSize: '24px' }}>Kelola Profil Alumni</h1>
-        <button
-          onClick={() => navigate('/admin/dashboard')}
-          style={{ padding: '8px 16px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-        >
-          ← Kembali
-        </button>
+        <h1 style={{ fontSize: '1.6rem' }}>Kelola Profil Alumni</h1>
       </div>
 
-      {error && <div style={{ background: '#fee2e2', color: '#dc2626', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{error}</div>}
-      {success && <div style={{ background: '#dcfce7', color: '#16a34a', padding: '10px', borderRadius: '4px', marginBottom: '16px' }}>{success}</div>}
+      {error && <div className="alert-error">{error}</div>}
+      {success && <div className="alert-success">{success}</div>}
 
-      <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '24px', marginBottom: '32px' }}>
-        <h2 style={{ margin: '0 0 16px', fontSize: '18px' }}>{editId ? 'Edit Profil Alumni' : 'Tambah Profil Alumni'}</h2>
+      {/* Form */}
+      <div className="card" style={{ marginBottom: '28px' }}>
+        <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>{editId ? 'Edit Profil Alumni' : 'Tambah Profil Alumni'}</h2>
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '12px' }}>
+          <div className="form-group">
             <label>Nama</label>
-            <input type="text" name="nama" value={form.nama} onChange={handleChange} required
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }} />
+            <input type="text" name="nama" value={form.nama} onChange={handleChange} required placeholder="Nama lengkap alumni..." />
           </div>
-          <div style={{ marginBottom: '12px' }}>
+          <div className="form-group">
             <label>Tahun Lulus</label>
-            <input type="number" name="tahun_lulus" value={form.tahun_lulus} onChange={handleChange} required min="2000" max="2099"
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }} />
+            <input type="number" name="tahun_lulus" value={form.tahun_lulus} onChange={handleChange} required min="2000" max="2099" placeholder="2023" />
           </div>
-          <div style={{ marginBottom: '12px' }}>
+          <div className="form-group">
             <label>Deskripsi Profesi</label>
-            <textarea name="deskripsi_profesi" value={form.deskripsi_profesi} onChange={handleChange} required rows={3}
-              style={{ display: 'block', width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }} />
+            <textarea name="deskripsi_profesi" value={form.deskripsi_profesi} onChange={handleChange} required rows={3} placeholder="Contoh: Software Engineer di PT Maju Jaya" />
           </div>
-          <div style={{ marginBottom: '16px' }}>
+          <div className="form-group">
             <label>Foto (jpg/png, maks 2MB)</label>
-            <input type="file" accept="image/jpg,image/jpeg,image/png" onChange={(e) => setFotoFile(e.target.files[0])}
-              style={{ display: 'block', marginTop: '4px' }} />
+            <input type="file" accept="image/jpg,image/jpeg,image/png" onChange={(e) => setFotoFile(e.target.files[0])} />
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button type="submit"
-              style={{ padding: '8px 24px', background: '#16213e', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-              {editId ? 'Simpan Perubahan' : 'Tambah Alumni'}
-            </button>
-            {editId && (
-              <button type="button" onClick={handleCancel}
-                style={{ padding: '8px 24px', background: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Batal
-              </button>
-            )}
+            <button type="submit" className="btn-primary">{editId ? 'Simpan Perubahan' : 'Tambah Alumni'}</button>
+            {editId && <button type="button" onClick={handleCancel} className="btn-gray">Batal</button>}
           </div>
         </form>
       </div>
 
-      <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Daftar Profil Alumni</h2>
-      {loading ? <p>Memuat data...</p> : alumnis.length === 0 ? <p>Belum ada profil alumni.</p> : (
+      {/* List */}
+      <h2 style={{ fontSize: '16px', marginBottom: '16px' }}>Daftar Profil Alumni ({alumnis.length})</h2>
+      {loading ? <p>Memuat data...</p> : alumnis.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px', color: '#718096' }}>Belum ada profil alumni.</div>
+      ) : (
         alumnis.map((alumni) => (
-          <div key={alumni.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', marginBottom: '12px' }}>
-            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{alumni.nama}</div>
-            <div style={{ color: '#6b7280', marginBottom: '4px' }}>Tahun Lulus: {alumni.tahun_lulus}</div>
-            <div style={{ color: '#6b7280', marginBottom: '12px' }}>{alumni.deskripsi_profesi}</div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => handleEdit(alumni)}
-                style={{ padding: '4px 12px', background: '#f59e0b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Edit
-              </button>
-              <button onClick={() => handleDelete(alumni.id)}
-                style={{ padding: '4px 12px', background: '#dc2626', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Hapus
-              </button>
+          <div key={alumni.id} className="card" style={{ marginBottom: '12px', display: 'grid', gridTemplateColumns: '1fr auto', gap: '16px', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontWeight: 600, color: '#1a3a5c', marginBottom: '4px' }}>{alumni.nama}</div>
+              <div style={{ fontSize: '12px', color: '#2b6cb0', fontWeight: 600, marginBottom: '4px' }}>Lulus {alumni.tahun_lulus}</div>
+              <div style={{ color: '#718096', fontSize: '13px' }}>{alumni.deskripsi_profesi}</div>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+              <button onClick={() => handleEdit(alumni)} className="btn-warning">Edit</button>
+              <button onClick={() => handleDelete(alumni.id)} className="btn-danger">Hapus</button>
             </div>
           </div>
         ))
       )}
-    </div>
+    </AdminLayout>
   );
 }
 
