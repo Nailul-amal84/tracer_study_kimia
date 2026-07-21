@@ -40,7 +40,7 @@ function TracerStudy() {
     }
   };
 
-   const ikonPerJenis = {
+  const ikonPerJenis = {
     pengguna_lulusan: '🏢',
     mahasiswa: '🎓',
     alumni: '👨‍🎓',
@@ -80,8 +80,10 @@ function TracerStudy() {
                 className="card"
                 style={{
                   textAlign: 'center',
-                  border: aktifJenis === tracer.jenis ? '2px solid #1a3a5c' : '1px solid #e2e8f0',
-                  transition: 'all 0.2s ease'
+                  outline: aktifJenis === tracer.jenis ? '2px solid #1a3a5c' : 'none',
+                  border: '1px solid #e2e8f0',
+                  transition: 'all 0.2s ease',
+                  height: '100%'
                 }}
               >
                 <div style={{ fontSize: '40px', marginBottom: '12px' }}>
@@ -91,7 +93,7 @@ function TracerStudy() {
                 <p style={{ fontSize: '13px', color: '#718096', marginBottom: '20px' }}>
                   {tracer.jenis === 'pengguna_lulusan' && 'Untuk perusahaan/instansi pengguna lulusan Kimia UINAR'}
                   {tracer.jenis === 'mahasiswa' && 'Untuk mahasiswa aktif Program Studi Kimia UINAR'}
-                  {tracer.jenis === 'alumni' && 'Untuk alumni Program Studi Kimia UINAR'}
+                  {tracer.jenis === 'alumni' && 'Untuk alumni dan lulusan Program Studi Kimia UINAR'}
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -101,6 +103,14 @@ function TracerStudy() {
                       target="_blank"
                       rel="noreferrer"
                       className="btn-primary"
+                      style={{ 
+                        width: '100%', 
+                        boxSizing: 'border-box',
+                        padding: '10px 24px',
+                        fontSize: '15px',
+                        lineHeight: '1.5',
+                        display: 'block'
+                      }}
                     >
                       📝 Isi Kuisioner
                     </a>
@@ -120,6 +130,13 @@ function TracerStudy() {
                   <button
                     onClick={() => fetchHasil(tracer.jenis)}
                     className="btn-secondary"
+                    style={{ 
+                      width: '100%', 
+                      boxSizing: 'border-box',
+                      padding: '10px 24px',
+                      fontSize: '15px',
+                      lineHeight: '1.5'
+                    }}
                   >
                     📊 Lihat Hasil Survey
                   </button>

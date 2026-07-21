@@ -9,11 +9,7 @@ function ProfilAlumni() {
 
   useEffect(() => {
     getProfilAlumni().then((result) => {
-      const data = result.data;
-      setDaftarAlumni(result.data);
-      // Ambil daftar tahun unik untuk filter
-      const tahuns = [...new Set(data.map((a) => a.tahun_lulus))].sort((a, b) => b - a);
-      setTahunList(tahuns);
+      setDaftarAlumni(result.data.data || result.data);
       setLoading(false);
     });
   }, []);
