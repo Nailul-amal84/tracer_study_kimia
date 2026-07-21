@@ -114,55 +114,7 @@ function Home() {
         }}>
           Mulai Isi Kuisioner →
         </a>
-      </div>
-
-      {/* Footer */}
-      <footer style={{
-        background: '#0f2540',
-        color: 'rgba(255,255,255,0.7)',
-        padding: '40px 24px',
-        marginTop: 'auto'
-      }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px' }}>
-          <div>
-            <div style={{ fontWeight: 700, color: 'white', marginBottom: '12px', fontSize: '16px' }}>Tracer Study Kimia</div>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', lineHeight: 1.7 }}>
-              Program Studi Kimia<br />
-              Fakultas Sains dan Teknologi<br />
-              UIN Ar-Raniry Banda Aceh
-            </p>
-          </div>
-          <div>
-            <div style={{ fontWeight: 600, color: 'white', marginBottom: '12px' }}>Menu</div>
-            {[
-              { label: 'Beranda', href: '/' },
-              { label: 'Tracer Study', href: '/tracer-study' },
-              { label: 'Informasi', href: '/informasi' },
-              { label: 'Profil Alumni', href: '/profil-alumni' },
-              { label: 'FAQ', href: '/faq' },
-            ].map((item) => (
-              <div key={item.label} style={{ marginBottom: '6px' }}>
-                <a href={item.href} style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', textDecoration: 'none' }}>{item.label}</a>
-              </div>
-            ))}
-          </div>
-          <div>
-            <div style={{ fontWeight: 600, color: 'white', marginBottom: '12px' }}>Kontak</div>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', lineHeight: 1.9 }}>
-              📍 Jl. Syeikh Abdur Rauf<br />
-              Banda Aceh, Aceh<br />
-              📧 kimia@ar-raniry.ac.id
-            </p>
-          </div>
-        </div>
-        <div style={{
-          maxWidth: '1100px', margin: '32px auto 0',
-          paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.1)',
-          textAlign: 'center', fontSize: '13px', color: 'rgba(255,255,255,0.4)'
-        }}>
-          © 2026 Tracer Study Kimia UIN Ar-Raniry. All rights reserved.
-        </div>
-      </footer>
+      </div>            
     </div>
   );
 }

@@ -16,20 +16,21 @@ import KelolaTentang from './pages/admin/KelolaTentang';
 import KelolaTracerStudy from './pages/admin/KelolaTracerStudy';
 import LihatPesan from './pages/admin/LihatPesan';
 import TracerStudy from './pages/TracerStudy';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Halaman Publik (dengan Navbar) */}
-        <Route path="/" element={<><Navbar /><Home /></>} />
-        <Route path="/faq" element={<><Navbar /><FAQ /></>} />
-        <Route path="/laporan-saran" element={<><Navbar /><LaporanSaran /></>} />
-        <Route path="/tentang/:jenis" element={<><Navbar /><Tentang /></>} />
-        <Route path="/profil-alumni" element={<><Navbar /><ProfilAlumni /></>} />
-        <Route path="/informasi" element={<><Navbar /><Informasi /></>} />
-        <Route path="/informasi/:id" element={<><Navbar /><DetailArtikel /></>} />
-        <Route path="/tracer-study" element={<><Navbar /><TracerStudy /></>} />
+        <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+        <Route path="/faq" element={<><Navbar /><FAQ /><Footer /></>} />
+        <Route path="/laporan-saran" element={<><Navbar /><LaporanSaran /><Footer /></>} />
+        <Route path="/tentang/:jenis" element={<><Navbar /><Tentang /><Footer /></>} />
+        <Route path="/profil-alumni" element={<><Navbar /><ProfilAlumni /><Footer /></>} />
+        <Route path="/informasi" element={<><Navbar /><Informasi /><Footer /></>} />
+        <Route path="/informasi/:id" element={<><Navbar /><DetailArtikel /><Footer /></>} />
+        <Route path="/tracer-study" element={<><Navbar /><TracerStudy /><Footer /></>} />
 
         {/* Halaman Admin (tanpa Navbar publik) */}
         <Route path="/admin/login" element={<Login />} />
