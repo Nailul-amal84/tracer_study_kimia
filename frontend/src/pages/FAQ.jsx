@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getFaq } from '../services/api';
+import Spinner from '../components/Spinner';
 
 function FAQ() {
   const [daftarFaq, setDaftarFaq] = useState([]);
@@ -14,7 +15,7 @@ function FAQ() {
   }, []);
 
   if (loading) {
-    return <p>Memuat data...</p>;
+    return <Spinner />;
   }
 
   return (

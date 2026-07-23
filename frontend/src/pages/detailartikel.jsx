@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 function DetailArtikel() {
   const { id } = useParams();
@@ -26,11 +27,9 @@ function DetailArtikel() {
     fetchArtikel();
   }, [id]);
 
-  if (loading) return (
-    <div style={{ padding: '80px 24px', textAlign: 'center', color: '#718096' }}>
-      Memuat data...
-    </div>
-  );
+  if (loading) {
+    return <Spinner />;
+  }
 
   if (error) return (
     <div style={{ padding: '80px 24px', textAlign: 'center' }}>

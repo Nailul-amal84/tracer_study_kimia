@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 function Informasi() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function Informasi() {
         {error && <div className="alert-error">{error}</div>}
 
         {loading ? (
-          <p>Memuat data...</p>
+          <Spinner />
         ) : artikels.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 0', color: '#718096' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📰</div>

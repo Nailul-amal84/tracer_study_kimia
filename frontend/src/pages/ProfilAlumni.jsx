@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getProfilAlumni } from '../services/api';
+import Spinner from '../components/Spinner';
 
 function ProfilAlumni() {
   const [daftarAlumni, setDaftarAlumni] = useState([]);
@@ -18,7 +19,7 @@ function ProfilAlumni() {
     ? daftarAlumni.filter((a) => String(a.tahun_lulus) === filterTahun)
     : daftarAlumni;
 
-  if (loading) return <p>Memuat data...</p>;
+  if (loading) return <Spinner />;
 
   return (
     <div>

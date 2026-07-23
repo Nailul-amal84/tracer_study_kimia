@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Spinner from '../components/Spinner';
 
 function TracerStudy() {
   const [tracers, setTracers] = useState([]);
@@ -66,7 +67,7 @@ function TracerStudy() {
         {error && <div className="alert-error">{error}</div>}
 
         {loading ? (
-          <p>Memuat data...</p>
+          <Spinner />
         ) : (
           <div style={{
             display: 'grid',

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getTentang } from '../services/api';
+import Spinner from '../components/Spinner';
 
 const judulPerJenis = {
   "struktur_organisasi": "Struktur Organisasi",
@@ -27,7 +28,7 @@ function Tentang() {
     });
   }, [jenis]);
 
-  if (loading) return <p>Memuat data...</p>;
+  if (loading) return <Spinner />;
 
   return (
     <div>

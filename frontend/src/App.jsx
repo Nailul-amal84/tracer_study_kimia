@@ -17,6 +17,7 @@ import KelolaTracerStudy from './pages/admin/KelolaTracerStudy';
 import LihatPesan from './pages/admin/LihatPesan';
 import TracerStudy from './pages/TracerStudy';
 import Footer from './components/Footer';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
         <Route path="/admin/tentang" element={<KelolaTentang />} />
         <Route path="/admin/tracer-study" element={<KelolaTracerStudy />} />
         <Route path="/admin/laporan-saran" element={<LihatPesan />} />
+
+        {/* 404 — paling bawah */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
