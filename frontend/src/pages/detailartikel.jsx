@@ -27,9 +27,7 @@ function DetailArtikel() {
     fetchArtikel();
   }, [id]);
 
-  if (loading) {
-    return <Spinner />;
-  }
+  if (loading) return <Spinner />;
 
   if (error) return (
     <div style={{ padding: '80px 24px', textAlign: 'center' }}>
@@ -43,19 +41,8 @@ function DetailArtikel() {
 
   return (
     <div>
-      {/* Cover Image */}
-      {artikel.cover_artikel && (
-        <div style={{ width: '100%', height: '380px', overflow: 'hidden' }}>
-          <img
-            src={`http://127.0.0.1:8000/storage/${artikel.cover_artikel}`}
-            alt={artikel.judul}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-      )}
-
-      {/* Content */}
       <div className="page-content" style={{ maxWidth: '780px' }}>
+
         {/* Tombol Kembali */}
         <button
           onClick={() => navigate('/informasi')}
@@ -95,14 +82,53 @@ function DetailArtikel() {
           {artikel.ringkasan}
         </p>
 
-        {/* Isi Artikel */}
+        {/* Layout Cover + Isi */}
         <div style={{
-          lineHeight: 1.85,
-          fontSize: '16px',
-          color: '#2d3748',
-          marginBottom: '40px'
+          display: 'grid',
+          gridTemplateColumns: artikel.cover_artikel ? '200px 1fr' : '1fr',
+          gap: '28px',
+          marginBottom: '40px',
+          alignItems: 'start'
         }}>
-          {artikel.isi}
+          {/* Cover */}
+          {artikel.cover_artikel && (
+            <div>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: 700,
+                color: '#718096',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                marginBottom: '8px'
+              }}>
+                📄 Cover Artikel
+              </div>
+              <div style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                background: '#f7f9fc',
+                padding: '10px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+              }}>
+                <img
+                  src={`http://127.0.0.1:8000/storage/${artikel.cover_artikel}`}
+                  alt={artikel.judul}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    borderRadius: '4px'
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Isi Artikel */}
+          <div style={{ lineHeight: 1.85, fontSize: '16px', color: '#2d3748' }}>
+            {artikel.isi}
+          </div>
         </div>
 
         {/* Tombol Unduh */}

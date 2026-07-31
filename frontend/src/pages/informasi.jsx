@@ -70,7 +70,7 @@ function Informasi() {
                   padding: 0,
                   overflow: 'hidden',
                   display: 'grid',
-                  gridTemplateColumns: artikel.cover_artikel ? '280px 1fr' : '1fr',
+                  gridTemplateColumns: artikel.cover_artikel ? 'auto 1fr' : '1fr',
                   transition: 'box-shadow 0.2s ease, transform 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -83,15 +83,27 @@ function Informasi() {
                 }}
               >
                 {artikel.cover_artikel && (
-                  <img
-                    src={`http://127.0.0.1:8000/storage/${artikel.cover_artikel}`}
-                    alt={artikel.judul}
-                    style={{
-                      width: '100%',
-                      height: '200px',
-                      objectFit: 'cover',
-                    }}
-                  />
+                  <div style={{
+                    width: '200px',
+                    minWidth: '200px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: '#f7f9fc',
+                    borderRadius: '4px',
+                    padding: '8px'
+                  }}> 
+                    <img
+                      src={`http://127.0.0.1:8000/storage/${artikel.cover_artikel}`}
+                      alt={artikel.judul}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        display: 'block',
+                        borderRadius: '4px'
+                      }}
+                    />
+                  </div>
                 )}
                 <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div style={{
