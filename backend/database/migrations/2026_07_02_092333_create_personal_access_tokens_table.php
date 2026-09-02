@@ -1,57 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-
-class AuthController extends Controller
+return new class extends Migration
 {
-    // Login
-    public function login(Request $request)
+    public function up(): void
     {
-        // Validasi input
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
-
-        // Cek kredensial
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Email atau password salah',
-            ], 401);
-        }
-
-        // Ambil user yang login
-        $user = Auth::user();
-
-        // Buat token
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'success' => true,
-            'token'   => $token,
-            'user'    => [
-                'id'    => $user->id,
-                'nama'  => $user->name,
-                'email' => $user->email,
-                'role'  => $user->role,
-            ],
-        ], 200);
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable');
+            $table->string('name');
+            $table->string('token', 64)->unique();
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('expires_at')->nullable()->index();
+            $table->timestamps();
+        });
     }
 
-    // Logout
-    public function logout(Request $request)
+    public function down(): void
     {
-        // Hapus token yang sedang dipakai
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Berhasil logout',
-        ], 200);
+        Schema::dropIfExists('personal_access_tokens');
     }
-}
+};
