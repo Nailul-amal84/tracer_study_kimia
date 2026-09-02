@@ -46,6 +46,7 @@ function Dashboard() {
     { icon: 'ℹ️', label: 'Kelola Tentang', path: '/admin/tentang', desc: 'Kelola struktur organisasi, surveyor, peneliti' },
     { icon: '📋', label: 'Kelola Tracer Study', path: '/admin/tracer-study', desc: 'Update link Google Form per jenis tracer' },
     { icon: '📩', label: 'Pesan Masuk', path: '/admin/laporan-saran', desc: 'Lihat laporan dan saran dari pengguna' },
+    { icon: '📊', label: 'Kelola Data Survey', path: '/admin/data-survey', desc: 'Input data hasil survey per tahun lulus' },
   ];
 
   return (

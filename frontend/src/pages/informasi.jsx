@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import Breadcrumb from '../components/breadcrumb';
 
 function Informasi() {
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ function Informasi() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'Informasi' },
+      ]} />
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',
@@ -92,7 +97,7 @@ function Informasi() {
                     background: '#f7f9fc',
                     borderRadius: '4px',
                     padding: '8px'
-                  }}> 
+                  }}>
                     <img
                       src={`http://127.0.0.1:8000/storage/${artikel.cover_artikel}`}
                       alt={artikel.judul}

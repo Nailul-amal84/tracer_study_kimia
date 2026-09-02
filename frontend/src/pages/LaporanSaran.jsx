@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { kirimLaporanSaran } from '../services/api';
+import Breadcrumb from '../components/breadcrumb';
 
 function LaporanSaran() {
   const [nama, setNama] = useState('');
@@ -25,6 +26,10 @@ function LaporanSaran() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'Laporan & Saran' },
+      ]} />
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',

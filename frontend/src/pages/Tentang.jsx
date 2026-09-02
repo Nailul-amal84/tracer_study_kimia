@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getTentang } from '../services/api';
 import Spinner from '../components/Spinner';
+import Breadcrumb from '../components/breadcrumb';
 
 const judulPerJenis = {
   "struktur_organisasi": "Struktur Organisasi",
@@ -32,6 +33,11 @@ function Tentang() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'Tentang', url: '/tentang/struktur_organisasi' },
+        { label: judulPerJenis[jenis] || 'Tentang' },
+      ]} />
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',

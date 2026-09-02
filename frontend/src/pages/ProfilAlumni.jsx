@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getProfilAlumni } from '../services/api';
 import Spinner from '../components/Spinner';
+import Breadcrumb from '../components/breadcrumb';
 
 function ProfilAlumni() {
   const [daftarAlumni, setDaftarAlumni] = useState([]);
@@ -23,6 +24,10 @@ function ProfilAlumni() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'Profil Alumni' },
+      ]} />
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',

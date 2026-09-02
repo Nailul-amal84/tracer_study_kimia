@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import Breadcrumb from '../components/breadcrumb';
 
 function DetailArtikel() {
   const { id } = useParams();
@@ -41,6 +42,11 @@ function DetailArtikel() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'Informasi', url: '/informasi' },
+        { label: artikel.judul },
+      ]} />
       <div className="page-content" style={{ maxWidth: '780px' }}>
 
         {/* Tombol Kembali */}

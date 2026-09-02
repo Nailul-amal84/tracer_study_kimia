@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getFaq } from '../services/api';
 import Spinner from '../components/Spinner';
+import Breadcrumb from '../components/breadcrumb';
 
 function FAQ() {
   const [daftarFaq, setDaftarFaq] = useState([]);
@@ -20,6 +21,10 @@ function FAQ() {
 
   return (
     <div>
+      <Breadcrumb items={[
+        { label: 'Beranda', url: '/' },
+        { label: 'FAQ' },
+      ]} />
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2540 100%)',

@@ -18,6 +18,8 @@ import LihatPesan from './pages/admin/LihatPesan';
 import TracerStudy from './pages/TracerStudy';
 import Footer from './components/Footer';
 import NotFound from './pages/NotFound';
+import KelolaDataSurvey from './pages/admin/KelolaDataSurvey';
+import HasilSurvey from './pages/HasilSurvey';
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
         <Route path="/informasi" element={<><Navbar /><Informasi /><Footer /></>} />
         <Route path="/informasi/:id" element={<><Navbar /><DetailArtikel /><Footer /></>} />
         <Route path="/tracer-study" element={<><Navbar /><TracerStudy /><Footer /></>} />
+        <Route path="/tracer-study/:jenis/hasil" element={<><Navbar /><HasilSurvey /><Footer /></>} />
 
         {/* Halaman Admin (tanpa Navbar publik) */}
         <Route path="/admin/login" element={<Login />} />
@@ -42,6 +45,7 @@ function App() {
         <Route path="/admin/tentang" element={<KelolaTentang />} />
         <Route path="/admin/tracer-study" element={<KelolaTracerStudy />} />
         <Route path="/admin/laporan-saran" element={<LihatPesan />} />
+        <Route path="/admin/data-survey" element={<KelolaDataSurvey />} />
 
         {/* 404 — paling bawah */}
         <Route path="*" element={<NotFound />} />

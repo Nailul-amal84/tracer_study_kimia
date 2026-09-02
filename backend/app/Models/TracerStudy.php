@@ -20,4 +20,9 @@ class TracerStudy extends Model
     {
         return $this->hasMany(HasilSurvey::class);
     }
+
+    public function dataSurveys()
+    {
+    return $this->hasMany(DataSurvey::class);
+    }
 }

@@ -159,6 +159,24 @@ function Navbar() {
           <Link to="/faq" style={linkStyle('/faq')}>FAQ</Link>
         </div>
 
+        {/* Tombol Login Admin */}
+        <Link to="/admin/login" title="Login Admin" style={{
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '6px',
+          padding: '6px 16px', 
+          borderRadius: '20px',
+          background: 'rgba(255,255,255,0.15)', 
+          color: 'white',
+          textDecoration: 'none', 
+          fontSize: '14px',
+          fontWeight: 600,
+          flexSrhrink: 'none',
+          whiteSpace: 'nowrap',
+        }} className="desktop-menu">
+          🔒 Login Admin
+        </Link>
+
         {/* Search Bar */}
         <div ref={searchRef} style={{ position: 'relative', flexShrink: 0 }} className="desktop-menu">
           <div style={{ position: 'relative' }}>
@@ -242,13 +260,17 @@ function Navbar() {
                               {labelPerType[item.type]}
                             </span>
                           </div>
-                          <div style={{ fontWeight: 600, color: '#1a3a5c', fontSize: '13px', marginBottom: '2px',
-                            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <div style={{
+                            fontWeight: 600, color: '#1a3a5c', fontSize: '13px', marginBottom: '2px',
+                            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                          }}>
                             {item.judul}
                           </div>
                           {item.deskripsi && (
-                            <div style={{ fontSize: '12px', color: '#718096',
-                              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            <div style={{
+                              fontSize: '12px', color: '#718096',
+                              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                            }}>
                               {item.deskripsi}
                             </div>
                           )}
@@ -325,6 +347,9 @@ function Navbar() {
           <Link to="/informasi" style={mobileLinkStyle('/informasi')} onClick={() => setMenuOpen(false)}>Informasi</Link>
           <Link to="/laporan-saran" style={mobileLinkStyle('/laporan-saran')} onClick={() => setMenuOpen(false)}>Laporan & Saran</Link>
           <Link to="/faq" style={mobileLinkStyle('/faq')} onClick={() => setMenuOpen(false)}>FAQ</Link>
+          <Link to="/admin/login" style={{ ...mobileLinkStyle('/admin/login'), borderTop: '1px solid #e2e8f0', marginTop: '8px', paddingTop: '16px' }} onClick={() => setMenuOpen(false)}>
+            🔒 Login Admin
+          </Link>
         </div>
       )}
 
